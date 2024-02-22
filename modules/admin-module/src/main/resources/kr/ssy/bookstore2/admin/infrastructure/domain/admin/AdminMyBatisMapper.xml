@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+  namespace="kr.ssy.bookstore2.admin.infrastructure.domain.admin.AdminMyBatisMapper">
+
+  <insert id="insertAdmin"  keyProperty="id">
+    INSERT INTO admin
+    (
+      email
+    , password
+    , name
+    , insert_date
+    )
+    VALUES
+    (
+      #{email}
+    , #{password}
+    , #{name}
+    , current_timestamp()
+    )
+  </insert>
+
+  <insert id="insertAdminAuthorityList">
+    INSERT INTO admin_authority
+    (
+      admin_id
+    , authority
+    )
+    VALUES
+    <foreach collection="adminAuthorityList" item="item" separator=",">
+    (
+        #{id} , #{item.authorityType}
+
+    )
+    </foreach>
+  </insert>
+
+
+</mapper>

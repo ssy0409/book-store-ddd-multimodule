@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+  namespace="kr.ssy.bookstore2.product.infrastructure.domain.contents.ContentsMyBatisMapper">
+
+  <resultMap id="contentsMap"
+    autoMapping="true"
+    type="kr.ssy.bookstore2.product.domain.contents.Contents">
+    <id property="id" column="id"/>
+    <association property="auditLog"
+      autoMapping="true"
+      javaType="kr.ssy.bookstore2.buildingblocks.domain.AuditLog"/>
+  </resultMap>
+
+  <insert id="insertOrUpdateContents" keyProperty="id">
+    INSERT INTO contents( id, contents_type, name, description, data
+                        , created_at, created_by, updated_at, updated_by )
+    VALUES( #{id}, #{contentsType}, #{name}, #{description}, #{data}
+          , #{auditLog.createdAt}, #{auditLog.createdBy}, #{auditLog.updatedAt}, #{auditLog.updatedBy} )
+    ON DUPLICATE KEY
+    UPDATE contents_type = VALUES(contents_type)
+         , name = VALUES(name)
+         , description = VALUES(description)
+         , data = VALUES(data)
+         , updated_at = VALUES(updated_at)
+         , updated_by = VALUES(updated_by)
+  </insert>
+
+  <select id="selectById" resultMap="contentsMap">
+    SELECT c.id, c.contents_type, c.name, c.description, c.data
+         , c.created_at, c.created_by, c.updated_at, c.updated_by
+      FROM contents c
+     WHERE c.tenant_id = #{tenantId}
+       AND c.id = #{id}
+  </select>
+
+  <select id="selectListByIds" resultMap="contentsMap">
+    SELECT c.id, c.contents_type, c.name, c.description, c.data
+         , c.created_at, c.created_by, c.updated_at, c.updated_by
+      FROM contents c
+     WHERE c.id IN (
+        <foreach collection="list" index="index" item="item" separator=",">
+          #{item}
+        </foreach>
+        )
+  </select>
+
+</mapper>

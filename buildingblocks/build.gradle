@@ -1,0 +1,25 @@
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation "org.apache.commons:commons-lang3:3.12.0"
+
+    api "org.springframework:spring-context"
+    api "org.springframework:spring-web"
+    api "org.springframework:spring-tx"
+
+    api "org.mybatis:mybatis:${mybatisVersion}"
+    api "org.mybatis.spring.boot:mybatis-spring-boot-starter:${springMybatisVersion}"
+    api "org.mybatis.spring.boot:mybatis-spring-boot-starter-test:${springMybatisVersion}"
+    api "org.mybatis:mybatis-typehandlers-jsr310:1.0.2"
+
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    implementation "org.mybatis:mybatis-typehandlers-jsr310:1.0.2"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}

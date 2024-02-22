@@ -1,0 +1,113 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    ext {
+        springDocVersion = '2.1.0'
+        springMybatisVersion = '3.0.2'
+        mybatisVersion = '3.5.9'
+        mybatisJsr310Version = '1.0.2'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'kr.ssy.bookstore2'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+bootJar {
+    enabled(false)
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'java-library'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group 'kr.ssy.bookstore2'
+    version = 'unspecified'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    bootJar {
+        enabled(false)
+        reproducibleFileOrder(true)
+    }
+
+    jar {
+        enabled(true)
+        reproducibleFileOrder(true)
+    }
+
+    dependencies {
+        // spring
+        implementation "org.springframework.boot:spring-boot-starter-web"
+        implementation "org.springframework.boot:spring-boot-starter-security"
+        implementation "org.springframework.boot:spring-boot-starter-validation"
+        implementation "org.springframework.boot:spring-boot-starter-jdbc"
+        implementation "org.springframework.boot:spring-boot-starter-logging"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+
+
+//        implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${springMybatisVersion}"
+
+        implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${springMybatisVersion}"
+        implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocVersion}"
+        implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:${springDocVersion}"
+        implementation "org.springframework.data:spring-data-commons"
+
+        implementation "com.fasterxml.jackson.core:jackson-core"
+        implementation "com.fasterxml.jackson.core:jackson-annotations"
+        implementation "com.fasterxml.jackson.core:jackson-databind"
+        implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+
+        implementation "io.swagger.core.v3:swagger-annotations:2.2.7"
+
+        // validation
+        implementation "org.hibernate.validator:hibernate-validator"
+        implementation 'org.glassfish:jakarta.el:5.0.0-M1'
+        testImplementation 'junit:junit:4.13.1'
+
+        // lombok
+        compileOnly "org.projectlombok:lombok"
+        testCompileOnly "org.projectlombok:lombok"
+        annotationProcessor "org.projectlombok:lombok"
+        testAnnotationProcessor "org.projectlombok:lombok"
+
+        // mapstruct
+        implementation "org.mapstruct:mapstruct:1.5.3.Final"
+        annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
+        testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
+
+        // apache
+        implementation "org.apache.commons:commons-lang3:3.12.0"
+
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+        testImplementation "org.mybatis.spring.boot:mybatis-spring-boot-starter-test:${springMybatisVersion}"
+
+        testImplementation platform('org.junit:junit-bom:5.9.1')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}

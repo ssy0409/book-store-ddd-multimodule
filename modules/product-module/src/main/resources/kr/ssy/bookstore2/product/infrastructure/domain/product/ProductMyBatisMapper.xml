@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+  namespace="kr.ssy.bookstore2.product.infrastructure.domain.product.ProductMyBatisMapper">
+
+    <resultMap id="productMap"
+      autoMapping="true"
+      type="kr.ssy.bookstore2.product.domain.product.Product">
+
+      <id property="id" column="id"/>
+      <association property="auditLog"
+        autoMapping="true"
+        javaType="kr.ssy.bookstore2.buildingblocks.domain.AuditLog"/>
+      <collection property="productContentsList"
+        autoMapping="true"
+        javaType="java.util.List"
+        notNullColumn="product_contents_id"
+        ofType="kr.ssy.bookstore2.product.domain.product.ProductContents">
+        <id property="id" column="product_contents_id"/>
+        <association property="product"
+          autoMapping="true"
+          javaType="kr.ssy.bookstore2.product.domain.product.Product">
+          <result property="id" column="product_id"/>
+        </association>
+        <association property="auditLog"
+          autoMapping="true"
+          columnPrefix="pc_"
+          javaType="kr.ssy.bookstore2.buildingblocks.domain.AuditLog"/>
+      </collection>
+  </resultMap>
+
+  <insert id="insertOrUpdateProduct" keyProperty="id">
+      INSERT INTO product( id, name, description, msr_price, sales_price, sales_opened_at, sales_closed_at, status, deleted
+                         , created_at, created_by, updated_at, updated_by )
+      VALUES( #{id}, #{name}, #{description}, #{msrPrice}, #{salesPrice}, #{salesOpenedAt}, #{salesClosedAt}, #{status}, #{deleted}
+            , #{auditLog.createdAt}, #{auditLog.createdBy}, #{auditLog.updatedAt}, #{auditLog.updatedBy} )
+      ON DUPLICATE KEY
+      UPDATE name = VALUES(name)
+           , msr_price = VALUES(msr_price)
+           , sales_price = VALUES(sales_price)
+           , sales_opened_at = VALUES(sales_opened_at)
+           , sales_closed_at = VALUES(sales_closed_at)
+           , status = VALUES(status)
+           , deleted = VALUES(deleted)
+           , updated_at = VALUES(updated_at)
+           , updated_by = VALUES(updated_by)
+    </insert>
+
+    <insert id="insertOrUpdateProductContentsList" keyProperty="id">
+      INSERT INTO product_contents( product_id, contents_id, contents_position_type, order_index, deleted
+      , created_at, created_by, updated_at, updated_by )
+      VALUES
+      <foreach collection="list" index="index" item="item" separator=",">
+        ( #{item.product.id}, #{item.contentsId}, #{item.contentsPositionType}, #{item.orderIndex}, #{item.deleted}
+        , #{item.auditLog.createdAt},#{item.auditLog.createdBy}, #{item.auditLog.updatedAt},#{item.auditLog.updatedBy} )
+      </foreach>
+      ON DUPLICATE KEY
+      UPDATE product_id = VALUES(product_id)
+      , contents_id = VALUES(contents_id)
+      , contents_position_type = VALUES(contents_position_type)
+      , order_index = VALUES(order_index)
+      , deleted = VALUES(deleted)
+      , updated_at = VALUES(updated_at)
+      , updated_by = VALUES(updated_by)
+    </insert>
+
+    <select id="selectById" resultMap="productMap">
+      SELECT p.id, p.name, p.description
+           , p.msr_price, p.sales_price, p.sales_opened_at, p.sales_closed_at, p.status, p.deleted
+           , p.created_at, p.created_by, p.updated_at, p.updated_by
+           , pc.id AS product_contents_id
+           , pc.product_id AS product_id
+           , pc.contents_id, pc.contents_position_type, pc.order_index, pc.deleted
+           , pc.created_at AS pc_created_at
+           , pc.created_by AS pc_created_by
+           , pc.updated_at AS pc_updated_at
+           , pc.updated_by AS pc_updated_by
+        FROM product p
+             LEFT OUTER JOIN product_contents pc
+                 ON p.id = pc.product_id
+                  AND pc.deleted = false
+       WHERE p.id = #{id}
+         AND p.deleted = false
+    </select>
+
+
+</mapper>

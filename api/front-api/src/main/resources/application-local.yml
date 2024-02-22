@@ -1,0 +1,23 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  application:
+    name: bookstore2-front-api
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    url: jdbc:mariadb://localhost:3306/bookstore2?useUnicode=true&characterEncoding=utf-8&connectionCollation=utf8_bin&characterSetResults=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    username: bs_master
+    password: 1234
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 5
+      minimum-idle: 2
+      max-lifetime: 570000
+      isolate-internal-queries: false
+
+bookstore:
+  server-name: bookstore2-front-local-haha

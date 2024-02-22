@@ -1,0 +1,33 @@
+server:
+  port: 8090
+  shutdown: graceful
+  error:
+    include-message: always
+    include-exception: false
+    include-stacktrace: never
+    include-binding-errors: never
+    whitelabel:
+      enabled: false
+
+logging:
+  level:
+    root: DEBUG
+    org.mariadb.jdbc: INFO
+    org.mybatis.spring: DEBUG
+    org.springframework: INFO
+    kr.ssy.bookstore2: DEBUG
+    reactor.netty: DEBUG
+
+spring-doc:
+  default-produces-media-type: application/json
+  api-docs:
+    groups:
+      enabled: true
+    enabled: true
+    path: /docs
+  swagger-ui:
+    display-request-duration: true
+    groups-order: DESC
+    doc-expansion: list
+
+

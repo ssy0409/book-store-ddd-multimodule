@@ -1,0 +1,6 @@
+package kr.ssy.bookstore2.buildingblocks.domain;
+
+public interface Auditable {
+
+    AuditLog getAuditLog();
+}

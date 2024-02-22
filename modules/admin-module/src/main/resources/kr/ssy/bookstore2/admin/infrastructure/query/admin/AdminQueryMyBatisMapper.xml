@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+  namespace="kr.ssy.bookstore2.admin.infrastructure.query.admin.AdminQueryMyBatisMapper">
+
+    <select id="getAdminById" resultMap="getAdminMap">
+        SELECT ad.id
+             , ad.password
+             , ad.email
+             , ad.name
+             , ad.insert_date
+             , aa.authority AS aa_authorityType
+             , aa.id AS aa_id
+             , ad.id AS aa_adminId
+         FROM admin ad
+              LEFT JOIN admin_authority aa
+                    ON ad.id  = aa.admin_id
+        WHERE ad.id = #{id}
+    </select>
+
+    <select id="getAdminByEmail" resultMap="getAdminMap">
+          SELECT ad.id
+                 , ad.password
+                 , ad.email
+                 , ad.name
+                 , ad.insert_date
+                 , aa.authority AS aa_authorityType
+                 , aa.id AS aa_id
+                 , ad.id AS aa_adminId
+             FROM admin ad
+                  LEFT JOIN admin_authority aa
+                        ON ad.id  = aa.admin_id
+            WHERE ad.email = #{email}
+    </select>
+
+    <resultMap id="getAdminMap"
+    autoMapping="true"
+    type="kr.ssy.bookstore2.admin.domain.admin.Admin">
+     <id property="id" column="id"  javaType= "java.lang.Long"/>
+     <result property="password" column="password" />
+     <result property="email" column="email"/>
+     <result property="name" column="name"/>
+     <result property="insertDate" column="insert_date"/>
+
+    <collection property="adminAuthorityList"
+    ofType="kr.ssy.bookstore2.admin.domain.admin.AdminAuthority"
+                autoMapping="true" columnPrefix="aa_"/>
+    </resultMap>
+
+
+</mapper>
