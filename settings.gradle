@@ -13,4 +13,6 @@ include 'modules:admin-module'
 findProject(':modules:admin-module')?.name = 'admin-module'
 include 'modules:book-module'
 findProject(':modules:book-module')?.name = 'book-module'
+include 'modules:book-module'
+findProject(':modules:book-module')?.name = 'book-module'
 

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import kr.ssy.bookstore2.admin.application.command.deleteadmin.DeleteAdmin;
 import kr.ssy.bookstore2.admin.application.contracts.AdminModule;
 import kr.ssy.bookstore2.admin.application.query.getadminbyid.GetAdminById;
 import kr.ssy.bookstore2.adminapi.api.admin.mapstruct.AdminControllerMapper;
@@ -85,5 +86,20 @@ public class AdminController {
 
     }
 
+    @Operation(summary = "관리자 삭제 ", description = "관리자 아이디로 관리자 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "success"),
+            @ApiResponse(responseCode = "400", description = "when business validation error")
+    })
+    @Secured({"AUTHORITY_ADMIN"})
+    @DeleteMapping("")
+    public CommonDataResponse deleteAdmin(
+            @RequestParam long id
+    ) {
+        var result = adminModule.executeCommand(new DeleteAdmin(id));
+        return CommonDataResponse.ok(
+                AdminControllerMapper.INSTANCE.mappingdeleteAdminResponse(result)
+        );
+    }
 
 }

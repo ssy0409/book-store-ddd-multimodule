@@ -1,20 +1,13 @@
-plugins {
-    id 'java'
+bootJar {
+    enabled = false
 }
 
-group = 'kr.ssy.bookstore2.admin'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+jar {
+    enabled = true
 }
 
 dependencies {
-    implementation project(path: ':buildingblocks')
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
+    implementation project(":buildingblocks")
 
-test {
-    useJUnitPlatform()
+    testRuntimeOnly("org.mariadb.jdbc:mariadb-java-client:3.0.8")
 }

@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductModule productModule;
-    
 
+    /**** sample ****/
     @Operation(summary = "상품 등록", description = "상품 등록을 등록한다")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "success"),
@@ -68,4 +68,6 @@ public class ProductController {
         return CommonDataResponse.ok(
                 ProductControllerMapper.INSTANCE.mappingGetProductByIdResponse(result));
     }
+
+    /**** sample ****/
 }

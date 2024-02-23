@@ -1,5 +1,6 @@
 package kr.ssy.bookstore2.book.infrastructure;
 
+
 import kr.ssy.bookstore2.book.application.contracts.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

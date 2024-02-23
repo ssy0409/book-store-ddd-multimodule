@@ -1,6 +1,6 @@
 package kr.ssy.bookstore2.adminapi.config.resolver;
 
-import kr.ssy.bookstore2.adminapi.config.security.detail.AdminDetails;
+import kr.ssy.bookstore2.adminapi.config.security.AdminDetails;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.support.WebDataBinderFactory;

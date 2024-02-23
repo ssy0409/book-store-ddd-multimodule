@@ -1,7 +1,7 @@
 package kr.ssy.bookstore2.adminapi.config.web;
 
+import kr.ssy.bookstore2.adminapi.config.security.AdminAuthenticationFilter;
 import kr.ssy.bookstore2.adminapi.config.security.TokenProvider;
-import kr.ssy.bookstore2.adminapi.config.security.fillter.AdminAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

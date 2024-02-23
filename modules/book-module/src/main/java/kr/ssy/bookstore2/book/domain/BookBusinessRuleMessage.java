@@ -1,13 +1,14 @@
 package kr.ssy.bookstore2.book.domain;
 
-
 import kr.ssy.bookstore2.buildingblocks.domain.BusinessRuleMessage;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
 public enum BookBusinessRuleMessage implements BusinessRuleMessage {
-    ADMIN_NOT_EXISTS("admin.notExist");
+    BOOK_NOT_EXISTS("book.notExist"),
+    BOOK_INVALID_PRICE("book.invalid.price"),
+    BOOL_INVALID_SALES_PERIOD("book.invalid.sales.period");
 
     private final String messageKey;
     private final HttpStatus httpStatus;

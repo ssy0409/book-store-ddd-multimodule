@@ -5,5 +5,78 @@
 <mapper
   namespace="kr.ssy.bookstore2.book.infrastructure.domain.book.BookMyBatisMapper">
 
+    <insert id="insertCategory"  keyProperty="id">
+        INSERT INTO category
+        (
+          parent_id
+        , name
+        , order_index
+        , insert_date
+        )
+        VALUES
+        (
+          #{parentId}
+        , #{name}
+        , #{orderIndex}
+        , #{insertDate}
+        , current_timestamp()
+        )
+    </insert>
+
+    <insert id="insertBook"  keyProperty="id">
+        INSERT INTO book
+        (
+          parent_id
+        , category_id
+        , isbn
+        , title
+        , author
+        , publication_date
+        , publisher
+        , thumbnail_url
+        , contents
+        , retail_price
+        , sales_price
+        , type
+        , sales_opened_at
+        , sales_closed_at
+        , status
+        , create_by
+        , insert_date
+        )
+        VALUES
+        (
+          #{parentId}
+        , #{categoryId}
+        , #{isbn}
+        , #{title}
+        , #{author}
+        , #{publicationDate}
+        , #{publisher}
+        , #{thumbnailUrl}
+        , #{contents}
+        , #{retailPrice}
+        , #{salesPrice}
+        , #{type}
+        , #{salesOpenedAt}
+        , #{salesClosedAt}
+        , #{status}
+        , #{createBy}
+        , current_timestamp()
+        )
+    </insert>
+
+    <insert id="insertGenre"  keyProperty="id">
+        INSERT INTO genre
+        (
+           book_id
+         , name
+        )
+        VALUES
+        (
+           #{bookId}
+         , #{name}
+        )
+   </insert>
 
 </mapper>

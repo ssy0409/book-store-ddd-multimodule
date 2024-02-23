@@ -23,7 +23,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-validation"
 
     implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
-    implementation project(path: ':modules:admin-module')
+    implementation project(path: ':modules:user-module')
     implementation project(path: ':modules:book-module')
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     developmentOnly "org.springframework.boot:spring-boot-devtools"
