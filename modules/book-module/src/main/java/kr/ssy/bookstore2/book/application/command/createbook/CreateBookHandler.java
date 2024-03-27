@@ -27,7 +27,9 @@ public class CreateBookHandler implements CommandHandler<CreateBook, CreateBookR
                 command.type(),
                 command.salesOpenedAt(),
                 command.salesClosedAt(),
-                command.bookGenreList()
+                command.bookGenreList(),
+                command.adminId(),
+                command.quantityAvailable()
 
         );
 

@@ -1,4 +1,4 @@
-package kr.ssy.bookstore2.adminapi.api.book.request;
+package kr.ssy.bookstore2.adminapi.api.category.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kr.ssy.bookstore2.book.domain.book.enumtype.BooKCategory;
@@ -13,7 +13,7 @@ public record CreateCategoryRequest(
                         description = "상위 카테고리 ID, 최상위 카테고리면 NULL",
                         requiredMode = NOT_REQUIRED
                 )
-        long parent_id,
+        long parentId,
         @Schema
                 (
                         name = "name",
@@ -28,7 +28,6 @@ public record CreateCategoryRequest(
                         requiredMode = REQUIRED
 
                 )
-        int orderIndex,
-        long adminId
+        int orderIndex
 ) {
 }

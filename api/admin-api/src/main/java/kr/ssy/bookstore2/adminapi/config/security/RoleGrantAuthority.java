@@ -16,19 +16,11 @@ public class RoleGrantAuthority implements GrantedAuthority {
         return this.roleName;
     }
 
-    @Getter
-    @RequiredArgsConstructor
-    public enum SystemUser {
-        ANONYMOUS(-9999),
-        ;
-
-        private final int id;
-    }
 
     @Getter
     @RequiredArgsConstructor
     public enum SystemAdmin {
-        ANONYMOUS(-8888),
+        ANONYMOUS(-9999),
         ;
 
         private final int id;

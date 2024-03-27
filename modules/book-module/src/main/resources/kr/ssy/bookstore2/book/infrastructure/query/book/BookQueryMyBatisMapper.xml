@@ -5,5 +5,14 @@
 <mapper
   namespace="kr.ssy.bookstore2.book.infrastructure.query.book.BookQueryMyBatisMapper">
 
-
+    <select id="selectCategoryByParentId" resultType="kr.ssy.bookstore2.book.domain.book.Category">
+        SELECT id
+             , parent_id
+             , name
+             , order_index
+             , insert_date
+             , update_date
+         FROM category
+        WHERE  parent_id = #{parentId}
+    </select>
 </mapper>

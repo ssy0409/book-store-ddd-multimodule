@@ -1,6 +1,5 @@
 package kr.ssy.bookstore2.book.application.command.createbook;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import kr.ssy.bookstore2.book.application.contracts.Command;
 import kr.ssy.bookstore2.book.domain.book.enumtype.BookGenre;
 import kr.ssy.bookstore2.book.domain.book.enumtype.BookStatus;
@@ -9,9 +8,6 @@ import kr.ssy.bookstore2.book.domain.book.enumtype.BookType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 public record CreateBook(
 
@@ -46,6 +42,7 @@ public record CreateBook(
 
         List<BookGenre> bookGenreList,
 
-        int quantityAvailable
+        int quantityAvailable,
+        long adminId
 ) implements Command<CreateBookResult> {
 }

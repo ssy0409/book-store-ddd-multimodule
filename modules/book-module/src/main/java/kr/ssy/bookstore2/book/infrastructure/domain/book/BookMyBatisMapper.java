@@ -7,13 +7,28 @@ import kr.ssy.bookstore2.book.domain.book.Genre;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface BookMyBatisMapper {
 
-    void insertCategory(Category category);
+    long insertCategory(Category category);
 
-    void insertBook(Book book);
+    long insertBook(Book book);
 
-    void insertGenre(List<Genre> genreList);
+    long insertGenre(List<Genre> genreList);
+
+    Optional<Category> selectCategoryById(long id);
+
+    List<Category> selectCategoryListByParentId(long parentId);
+
+    Optional<Long> updateBookStatus(Book updateBook);
+
+    Optional<Long> updateSalesPrice(Book book);
+
+    Optional<Integer> selectCategoryLastOrderByParentId(long parentId);
+
+    void updateCategory(Category newCategory);
+
+
 }

@@ -10,10 +10,18 @@ jar {
 }
 
 dependencies {
+    /*
     implementation project(":buildingblocks")
     implementation project(":modules:user-module")
     implementation project(":modules:product-module")
     implementation project(":modules:order-module")
+     */
+    implementation project(path: ':buildingblocks')
+    implementation project(path: ':modules:user-module')
+    implementation project(path: ':modules:product-module')
+    implementation project(path: ':modules:order-module')
+    implementation project(path: ':modules:book-module')
+
 
     // spring
     implementation "org.springframework.boot:spring-boot-starter-web"
@@ -23,8 +31,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-validation"
 
     implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
-    implementation project(path: ':modules:user-module')
-    implementation project(path: ':modules:book-module')
+
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     developmentOnly "org.springframework.boot:spring-boot-devtools"
 

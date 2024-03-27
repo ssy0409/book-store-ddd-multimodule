@@ -27,6 +27,6 @@ public class BookSalesPeriodRule implements BusinessRule {
 
     @Override
     public BusinessRuleMessage getMessage() {
-        return BookBusinessRuleMessage.BOOL_INVALID_SALES_PERIOD;
+        return BookBusinessRuleMessage.BOOK_INVALID_SALES_PERIOD;
     }
 }

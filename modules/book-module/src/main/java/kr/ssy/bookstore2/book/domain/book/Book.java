@@ -10,6 +10,9 @@ import kr.ssy.bookstore2.book.domain.book.enumtype.BookGenre;
 import kr.ssy.bookstore2.book.domain.book.enumtype.BookStatus;
 import kr.ssy.bookstore2.book.domain.book.enumtype.BookType;
 import kr.ssy.bookstore2.book.domain.book.events.CreateBookDomainEvent;
+import kr.ssy.bookstore2.book.domain.book.events.UpdateBookCategoryDomainEvent;
+import kr.ssy.bookstore2.book.domain.book.events.UpdateBookStatusDomainEvent;
+import kr.ssy.bookstore2.book.domain.book.events.UpdateSalesPriceDomainEvent;
 import kr.ssy.bookstore2.book.domain.book.rules.BookPriceRule;
 import kr.ssy.bookstore2.book.domain.book.rules.BookSalesPeriodRule;
 import kr.ssy.bookstore2.buildingblocks.domain.AggregateRoot;
@@ -84,7 +87,8 @@ public class Book extends AggregateRoot implements Entity, Auditable {
 
     @JsonManagedReference
     @NotEmpty
-    private List<@Valid Genre> genreList = new ArrayList<>();
+    private final List<@Valid Genre> genreList = new ArrayList<>();
+
 
     private final AuditLog auditLog = new AuditLog();
 
@@ -102,7 +106,8 @@ public class Book extends AggregateRoot implements Entity, Auditable {
                  BookType type,
                  LocalDate salesOpenedAt,
                  LocalDate salesClosedAt,
-                 BookStatus status
+                 BookStatus status,
+                 long adminId
     ) {
         this.parentId = parentId;
         this.categoryId = categoryId;
@@ -119,12 +124,35 @@ public class Book extends AggregateRoot implements Entity, Auditable {
         this.salesOpenedAt = salesOpenedAt;
         this.salesClosedAt = salesClosedAt;
         this.status = status;
+        this.createBy = adminId;
 
         checkRule(new BookPriceRule(this));
         checkRule(new BookSalesPeriodRule(this));
 
         addDomainEvent(new CreateBookDomainEvent(this));
     }
+
+    private Book(long id, BookStatus status, long adminId) {
+        setId(id);
+        setStatus(status);
+        setUpdateBy(adminId);
+        addDomainEvent(new UpdateBookStatusDomainEvent(this));
+    }
+
+    private Book(long id, BigDecimal salesPrice, long adminId) {
+        setId(id);
+        setSalesPrice(salesPrice);
+        setUpdateBy(adminId);
+        addDomainEvent(new UpdateSalesPriceDomainEvent(this));
+    }
+
+    private Book(long id, long categoryId, long adminId) {
+        setId(id);
+        setCategoryId(categoryId);
+        setUpdateBy(adminId);
+        addDomainEvent(new UpdateBookCategoryDomainEvent(this));
+    }
+
 
     public static Book create(long parentId,
                               long categoryId,
@@ -140,7 +168,9 @@ public class Book extends AggregateRoot implements Entity, Auditable {
                               BookType type,
                               LocalDate salesOpenedAt,
                               LocalDate salesClosedAt,
-                              List<BookGenre> bookGenreList
+                              List<BookGenre> bookGenreList,
+                              long adminId,
+                              int quantityAvailable
     ) {
         Book book = new Book(parentId,
                 categoryId,
@@ -156,7 +186,11 @@ public class Book extends AggregateRoot implements Entity, Auditable {
                 type,
                 salesOpenedAt,
                 salesClosedAt,
-                BookStatus.ON_SALE);
+                BookStatus.ON_SALE,
+                adminId
+        );
+
+        book.addInventory(quantityAvailable);
 
         for (BookGenre genre : bookGenreList) {
             book.addGenre(genre);
@@ -166,9 +200,26 @@ public class Book extends AggregateRoot implements Entity, Auditable {
 
     }
 
+    public void addInventory(int quantityAvailable) {
+        Inventory.create(this.id, quantityAvailable);
+    }
+
     public void addGenre(BookGenre genre) {
         genreList.add(
                 Genre.create(this.id, genre)
         );
     }
+
+    public static Book updateStatus(long id, BookStatus status, long adminId) {
+        return new Book(id, status, adminId);
+    }
+
+    public static Book updateSalesPrice(long id, BigDecimal salesPrice, long adminId) {
+        return new Book(id, salesPrice, adminId);
+    }
+
+    public static Book updateBookCategory(long id, long categoryId, long adminId) {
+        return new Book(id, categoryId, adminId);
+    }
+
 }

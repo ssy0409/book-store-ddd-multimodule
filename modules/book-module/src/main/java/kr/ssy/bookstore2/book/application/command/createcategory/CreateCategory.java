@@ -5,8 +5,9 @@ import kr.ssy.bookstore2.book.domain.book.enumtype.BooKCategory;
 
 public record CreateCategory(
 
-        long parent_id,
+        long parentId,
         BooKCategory name,
-        int orderIndex
+        int orderIndex,
+        long adminId
 ) implements Command<CreateCategoryResult> {
 }

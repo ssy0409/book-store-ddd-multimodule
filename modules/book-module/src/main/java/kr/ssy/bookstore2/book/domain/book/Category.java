@@ -1,6 +1,5 @@
 package kr.ssy.bookstore2.book.domain.book;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import kr.ssy.bookstore2.book.domain.book.enumtype.BooKCategory;
 import kr.ssy.bookstore2.book.domain.book.events.CreateCategoryDomainEvent;
@@ -19,10 +18,9 @@ import java.time.LocalDateTime;
 public class Category extends AggregateRoot implements Entity, Auditable {
     private long id;
 
-    @NotNull
     private long parentId;
 
-    @NotBlank
+    @NotNull
     private BooKCategory name;
 
     @NotNull
@@ -38,9 +36,15 @@ public class Category extends AggregateRoot implements Entity, Auditable {
         this.parentId = parentId;
         this.name = name;
         this.orderIndex = orderIndex;
-        
+
         addDomainEvent(new CreateCategoryDomainEvent(this));
 
+    }
+
+    public Category(long id, long parentId, int orderIndex) {
+        this.id = id;
+        this.parentId = parentId;
+        this.orderIndex = orderIndex;
     }
 
     public static Category create(
@@ -48,4 +52,12 @@ public class Category extends AggregateRoot implements Entity, Auditable {
     ) {
         return new Category(parentId, name, orderIndex);
     }
+
+    public static Category update(
+            long id, long parentId, int orderIndex
+    ) {
+        return new Category(id, parentId, orderIndex);
+    }
+
+
 }

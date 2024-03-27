@@ -49,11 +49,6 @@ public class WebSecurityConfig {
                             cors.setAllowedHeaders(List.of("*"));
                             return cors;
                         }))
-
-/*
-                .addFilterBefore(new UserAuthenticationFilter(userJwtTokenProvider),
-                        UsernamePasswordAuthenticationFilter.class)
-*/
                 .addFilterBefore(new AdminAuthenticationFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(STATELESS));

@@ -102,7 +102,7 @@ public record CreateBookRequest(
         LocalDate salesClosedAt,
         @Schema(
                 name = "status",
-                description = "상품 상태 판매중, 판매중지",
+                description = "상품 상태 판매중, 판매중지, 재고없음",
                 requiredMode = REQUIRED
         )
         BookStatus status,

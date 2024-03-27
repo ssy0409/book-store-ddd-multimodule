@@ -8,7 +8,13 @@ import org.springframework.http.HttpStatus;
 public enum BookBusinessRuleMessage implements BusinessRuleMessage {
     BOOK_NOT_EXISTS("book.notExist"),
     BOOK_INVALID_PRICE("book.invalid.price"),
-    BOOL_INVALID_SALES_PERIOD("book.invalid.sales.period");
+    BOOK_INVALID_SALES_PERIOD("book.invalid.sales.period"),
+    BOOK_PARENTID_NOT_EXISTS("book,parnetid.not.exists"),
+    BOOK_INVALID_NOT_CATEGROY_INDEX("book.invalid.not.category.index"),
+    BOOK_CATEGORY_NOT_EXISTS("book.category.not.exists"),
+    BOOK_ID_NOT_EXISTS("book.id.not.exists"),
+    BOOK_CATEGORY_ID_NOT_EXISTS("book.category.id.not.exists"),
+    CATEGORY_ID_NOT_EXISTS("categroy.id.not.exists");
 
     private final String messageKey;
     private final HttpStatus httpStatus;
