@@ -1,8 +1,8 @@
 package kr.ssy.bookstore2.admin.application.command.registeradmin;
 
 import kr.ssy.bookstore2.admin.application.contracts.CommandHandler;
-import kr.ssy.bookstore2.admin.domain.admin.Admin;
-import kr.ssy.bookstore2.admin.domain.admin.AdminRepository;
+import kr.ssy.bookstore2.admin.domain.user.Admin;
+import kr.ssy.bookstore2.admin.domain.user.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

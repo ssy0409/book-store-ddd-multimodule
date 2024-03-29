@@ -1,7 +1,10 @@
 package kr.ssy.bookstore2.frontapi.config.security;
 
 import io.jsonwebtoken.*;
-import kr.ssy.bookstore2.admin.application.contracts.AdminModule;
+import kr.ssy.bookstore2.admin.application.contracts.UserModule;
+import kr.ssy.bookstore2.admin.application.query.getclientbyemail.GetClientByEmail;
+import kr.ssy.bookstore2.admin.application.query.getclientbyemail.GetClientByEmailResult;
+import kr.ssy.bookstore2.admin.domain.user.Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,18 +18,18 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TokenProvider {
 
-    private final AdminModule adminModule;
+    private final UserModule userModule;
     private final long expirationTimeInMillis = 1000L * 60 * 60 * 24; // 1일
     private String secretKeyString = "mySecretKeymySecretKeymySecretKeymySecretKeymySecretKeymySecretKeymySecretKey";
     byte[] secretKeyBytes = secretKeyString.getBytes(StandardCharsets.UTF_8);
 
 
     // 토큰 생성
-    public String generateToken(User user) {
+    public String generateToken(Client client) {
 
         return Jwts.builder()
-                .setSubject(String.valueOf(admin.getId()))
-                .claim("email", admin.getEmail())
+                .setSubject(String.valueOf(client.getId()))
+                .claim("email", client.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTimeInMillis))
                 .signWith(SignatureAlgorithm.HS256, secretKeyBytes)
@@ -53,9 +56,8 @@ public class TokenProvider {
 
     }
 
-    /*
 
-    public GetAdminByEmailResult getManagerByToken(String token) {
+    public GetClientByEmailResult getCleintByToken(String token) {
         Claims claims =
                 Jwts.parser()
                         .setSigningKey(secretKeyBytes)
@@ -64,12 +66,10 @@ public class TokenProvider {
 
         var email = (String) claims.get("email");
 
-        var result = adminModule.executeQuery(new GetAdminByEmail(email));
+        var result = userModule.executeQuery(new GetClientByEmail(email));
 
         return result;
     }
 
 
-
-     */
 }

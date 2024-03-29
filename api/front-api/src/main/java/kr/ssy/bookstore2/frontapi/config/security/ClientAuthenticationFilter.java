@@ -1,4 +1,4 @@
-package kr.ssy.bookstore2.adminapi.config.security;
+package kr.ssy.bookstore2.frontapi.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
-public class AdminAuthenticationFilter extends OncePerRequestFilter {
+public class ClientAuthenticationFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
 
     @Override
@@ -30,45 +30,26 @@ public class AdminAuthenticationFilter extends OncePerRequestFilter {
             securityContext
                     .setAuthentication(
                             new UsernamePasswordAuthenticationToken(
-                                    AdminDetails.createAnonymous(),
-                                    Collections.emptyList())
+                                    ClientDetails.createAnonymous(),
+                                    Collections.emptyList()
+                            )
                     );
             SecurityContextHolder.setContext(securityContext);
 
 
         } else if (tokenProvider.validateToken(token)) {
-
-
-            var admin = tokenProvider.getAdminByToken(token);
+            var client = tokenProvider.getCleintByToken(token);
 
             List<RoleGrantAuthority> authorities =
-                    admin.adminAuthorityList()
+                    client.adminAuthorityList()
                             .stream()
                             .map(authority -> new RoleGrantAuthority(authority.getAuthorityType().combinedWithAdmin()))
                             .collect(Collectors.toList());
 
 
-            var securityContext = SecurityContextHolder.createEmptyContext();
-            securityContext
-                    .setAuthentication(
-                            new UsernamePasswordAuthenticationToken(
-                                    new AdminDetails(
-                                            admin.id(),
-                                            admin.name(),
-                                            admin.email(),
-                                            authorities
-                                    ),
-                                    token,
-                                    authorities
-                            )
-
-                    );
-            SecurityContextHolder.setContext(securityContext);
-
         }
-        filterChain.doFilter(request, response);
-
     }
+
 
     private String parseBearerToken(HttpServletRequest request) {
         // 헤더에서 토큰 추출

@@ -1,7 +1,7 @@
 package kr.ssy.bookstore2.admin.application.query.getadminbyemail;
 
 import kr.ssy.bookstore2.admin.application.contracts.Result;
-import kr.ssy.bookstore2.admin.domain.admin.AdminAuthority;
+import kr.ssy.bookstore2.admin.domain.user.AdminAuthority;
 
 import java.time.LocalDateTime;
 import java.util.List;

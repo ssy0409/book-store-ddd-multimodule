@@ -1,10 +1,12 @@
 package kr.ssy.bookstore2.adminapi.config.security;
 
 import io.jsonwebtoken.*;
-import kr.ssy.bookstore2.admin.application.contracts.AdminModule;
+
+import kr.ssy.bookstore2.admin.application.contracts.UserModule;
 import kr.ssy.bookstore2.admin.application.query.getadminbyemail.GetAdminByEmail;
 import kr.ssy.bookstore2.admin.application.query.getadminbyemail.GetAdminByEmailResult;
-import kr.ssy.bookstore2.admin.domain.admin.Admin;
+import kr.ssy.bookstore2.admin.domain.user.Admin;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,7 +20,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TokenProvider {
 
-    private final AdminModule adminModule;
+    private final UserModule userModule;
     private final long expirationTimeInMillis = 1000L * 60 * 60 * 24; // 1일
     private String secretKeyString = "mySecretKeymySecretKeymySecretKeymySecretKeymySecretKeymySecretKeymySecretKey";
     byte[] secretKeyBytes = secretKeyString.getBytes(StandardCharsets.UTF_8);
@@ -40,7 +42,6 @@ public class TokenProvider {
     // 토큰 유효성 검사
     public boolean validateToken(String token) {
         try {
-            //     byte[] secretKeyBytes = secretKeyString.getBytes(StandardCharsets.UTF_8);
 
             Jwts.parser().setSigningKey(secretKeyBytes).parseClaimsJws(token);
             return true;
@@ -58,8 +59,7 @@ public class TokenProvider {
     }
 
 
-    public GetAdminByEmailResult getManagerByToken(String token) {
-        //     byte[] secretKeyBytes = secretKeyString.getBytes(StandardCharsets.UTF_8);
+    public GetAdminByEmailResult getAdminByToken(String token) {
 
         Claims claims =
                 Jwts.parser()
@@ -69,7 +69,7 @@ public class TokenProvider {
 
         var email = (String) claims.get("email");
 
-        var result = adminModule.executeQuery(new GetAdminByEmail(email));
+        var result = userModule.executeQuery(new GetAdminByEmail(email));
 
         return result;
     }

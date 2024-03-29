@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kr.ssy.bookstore2.admin.application.command.deleteadmin.DeleteAdmin;
-import kr.ssy.bookstore2.admin.application.contracts.AdminModule;
+import kr.ssy.bookstore2.admin.application.contracts.UserModule;
 import kr.ssy.bookstore2.admin.application.query.getadminbyid.GetAdminById;
 import kr.ssy.bookstore2.adminapi.api.admin.mapstruct.AdminControllerMapper;
 import kr.ssy.bookstore2.adminapi.api.admin.request.LoginAdminRequest;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 public class AdminController {
-    private final AdminModule adminModule;
+    private final UserModule userModule;
     private final TokenProvider tokenProvider;
 
     @Operation(summary = "관리자 등록", description = "관리자를 등록한다")
@@ -39,7 +39,7 @@ public class AdminController {
     public CommonDataResponse<RegisterAdminResponse> createProduct(
             @RequestBody @Valid RegisterAdminRequest request) {
 
-        var result = adminModule.executeCommand(
+        var result = userModule.executeCommand(
                 AdminControllerMapper.INSTANCE.mappingRegisterAdmin(request));
 
         return CommonDataResponse.ok(new RegisterAdminResponse(result.id()));
@@ -54,7 +54,7 @@ public class AdminController {
     public CommonDataResponse<LoginAdminResponse> loginManager(
             @RequestBody LoginAdminRequest request) {
 
-        var result = adminModule.executeCommand(
+        var result = userModule.executeCommand(
                 AdminControllerMapper.INSTANCE.mappingLoginAdmin(request)
         );
 
@@ -78,7 +78,7 @@ public class AdminController {
             @RequestParam long id
 
     ) {
-        var result = adminModule.executeQuery(new GetAdminById(id));
+        var result = userModule.executeQuery(new GetAdminById(id));
 
         return CommonDataResponse.ok(
                 AdminControllerMapper.INSTANCE.mappingGetAdminByIdResponse(result)
@@ -96,7 +96,7 @@ public class AdminController {
     public CommonDataResponse deleteAdmin(
             @RequestParam long id
     ) {
-        var result = adminModule.executeCommand(new DeleteAdmin(id));
+        var result = userModule.executeCommand(new DeleteAdmin(id));
         return CommonDataResponse.ok(
                 AdminControllerMapper.INSTANCE.mappingdeleteAdminResponse(result)
         );

@@ -2,7 +2,7 @@ package kr.ssy.bookstore2.admin.application.query.getadminbyemail;
 
 import kr.ssy.bookstore2.admin.application.contracts.QueryHandler;
 import kr.ssy.bookstore2.admin.application.query.mapstruct.GetAdminByEmailMapper;
-import kr.ssy.bookstore2.admin.infrastructure.query.admin.AdminQueryRepository;
+import kr.ssy.bookstore2.admin.infrastructure.query.user.UserQueryRepository;
 import kr.ssy.bookstore2.buildingblocks.domain.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import static kr.ssy.bookstore2.admin.domain.AdminBusinessRuleMessage.ADMIN_NOT_
 @RequiredArgsConstructor
 class GetAdminByEmailHandler implements QueryHandler<GetAdminByEmail, GetAdminByEmailResult> {
 
-    private final AdminQueryRepository adminQueryRepository;
+    private final UserQueryRepository adminQueryRepository;
 
 
     @Override

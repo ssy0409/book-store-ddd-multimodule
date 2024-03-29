@@ -1,7 +1,7 @@
 package kr.ssy.bookstore2.admin.application.command.registeradmin;
 
 import kr.ssy.bookstore2.admin.application.contracts.Command;
-import kr.ssy.bookstore2.admin.domain.admin.enumtype.AdminAuthorityType;
+import kr.ssy.bookstore2.admin.domain.user.enumtype.UserAuthorityType;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public record RegisterAdmin(
         String password,
 
         String name,
-        List<AdminAuthorityType> authorityList
+        List<UserAuthorityType> authorityList
 
 ) implements Command<RegisterAdminResult> {
 }

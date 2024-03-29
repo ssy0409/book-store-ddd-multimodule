@@ -1,7 +1,7 @@
 package kr.ssy.bookstore2.frontapi.config.web;
 
 import kr.ssy.bookstore2.frontapi.config.security.TokenProvider;
-import kr.ssy.bookstore2.frontapi.config.security.UserAuthenticationFilter;
+import kr.ssy.bookstore2.frontapi.config.security.ClientAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +50,7 @@ public class WebSecurityConfig {
                             cors.setAllowedHeaders(List.of("*"));
                             return cors;
                         }))
-                .addFilterBefore(new UserAuthenticationFilter(tokenProvider),
+                .addFilterBefore(new ClientAuthenticationFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(configurer -> configurer.sessionCreationPolicy(STATELESS));
 

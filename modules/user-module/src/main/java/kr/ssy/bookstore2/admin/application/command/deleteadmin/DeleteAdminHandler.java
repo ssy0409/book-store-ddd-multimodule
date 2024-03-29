@@ -1,7 +1,7 @@
 package kr.ssy.bookstore2.admin.application.command.deleteadmin;
 
 import kr.ssy.bookstore2.admin.application.contracts.CommandHandler;
-import kr.ssy.bookstore2.admin.domain.admin.AdminRepository;
+import kr.ssy.bookstore2.admin.domain.user.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

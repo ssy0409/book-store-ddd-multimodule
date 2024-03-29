@@ -1,4 +1,4 @@
-package kr.ssy.bookstore2.admin.application.query.getadminbyid;
+package kr.ssy.bookstore2.admin.application.query.getclientbyemail;
 
 import kr.ssy.bookstore2.admin.application.contracts.Result;
 import kr.ssy.bookstore2.admin.domain.user.AdminAuthority;
@@ -6,7 +6,7 @@ import kr.ssy.bookstore2.admin.domain.user.AdminAuthority;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record GetAdminByIdResult(
+public record GetClientByEmailResult(
         Long id,
         String password,
         String email,

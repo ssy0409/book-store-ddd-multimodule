@@ -1,7 +1,7 @@
 package kr.ssy.bookstore2.admin.application.command.loginadmin;
 
 import kr.ssy.bookstore2.admin.application.contracts.CommandHandler;
-import kr.ssy.bookstore2.admin.infrastructure.query.admin.AdminQueryRepository;
+import kr.ssy.bookstore2.admin.infrastructure.query.user.UserQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LoginAdminHandler implements CommandHandler<LoginAdmin, LoginAdminResult> {
-    private final AdminQueryRepository adminQueryRepository;
+    private final UserQueryRepository adminQueryRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional

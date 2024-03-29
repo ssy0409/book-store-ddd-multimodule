@@ -1,7 +1,7 @@
 package kr.ssy.bookstore2.adminapi.api.admin.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import kr.ssy.bookstore2.admin.domain.admin.enumtype.AdminAuthorityType;
+import kr.ssy.bookstore2.admin.domain.user.enumtype.UserAuthorityType;
 
 import java.util.List;
 
@@ -23,6 +23,6 @@ public record RegisterAdminRequest(
                 requiredMode = REQUIRED
         )
         String name,
-        List<AdminAuthorityType> authorityList
+        List<UserAuthorityType> authorityList
 ) {
 }
